@@ -42,4 +42,12 @@ public class TelaPrincipalPresenter {
         this.state = state;
     }
 
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
+
 }

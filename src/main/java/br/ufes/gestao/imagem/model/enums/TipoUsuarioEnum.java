@@ -12,16 +12,10 @@ public enum TipoUsuarioEnum {
     public String getDescricao() {
         return descricao;
     }
-    
-    public TipoUsuarioEnum getEnum(String cod) {
-        switch(cod) {
-            case "ADMIN":
-                return ADMIN;
-            case "USUARIO":
-                return USUARIO;
-            default:
-                throw new RuntimeException("Não é possível converter esse tipo de usuario");
-        }
+
+    @Override
+    public String toString() {
+        return descricao;
     }
 
 }

@@ -7,6 +7,8 @@ import br.ufes.gestao.imagem.model.enums.TipoUsuarioEnum;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAOSQLite implements IUsuarioDAO {
 
@@ -152,6 +154,50 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
     }
 
     @Override
+    public List<Usuario> filter(String nome) throws Exception {
+        try {
+            var sql = new StringBuilder();
+            sql.append(" SELECT u.id, u.nome, u.login, u.tipo ");
+            sql.append(" FROM Usuario u ");
+            sql.append(" WHERE u.excluido = 0 ");
+            if (nome != null && !nome.isBlank()) {
+                sql.append(" 	AND LOWER(u.nome) like LOWER('%'||?||'%') ");
+            }
+            sql.append(";");
+
+            Connection conn = this.manager.conectar();
+            this.manager.abreTransacao();
+
+            PreparedStatement ps = conn.prepareStatement(sql.toString());
+            if (nome != null && !nome.isBlank()) {
+                ps.setString(1, nome);
+            }
+            ResultSet rs = ps.executeQuery();
+
+            List<Usuario> usuarios = new ArrayList<>();
+
+            while (rs.next()) {
+                var usuario = new Usuario();
+                usuario.setId(rs.getLong(1));
+                usuario.setNome(rs.getString(2));
+                usuario.setLogin(rs.getString(3));
+                usuario.setTipo(TipoUsuarioEnum.valueOf(rs.getString(4)));
+                usuarios.add(usuario);
+            }
+
+            this.manager.fechaTransacao();
+            this.manager.close();
+
+            return usuarios;
+        } catch (Exception ex) {
+            this.manager.desfazTransacao();
+            this.manager.close();
+            System.out.println(ex.getMessage());
+            throw new Exception("Erro ao buscar");
+        }
+    }
+
+    @Override
     public void delete(Long id) throws Exception {
         try {
             String sql = "UPDATE Usuario SET excluido = 1 WHERE id = ?;";
@@ -188,6 +234,31 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
             this.manager.close();
 
             return rs.next();
+        } catch (Exception ex) {
+            this.manager.desfazTransacao();
+            this.manager.close();
+            throw new Exception("Erro ao buscar");
+        }
+    }
+
+    @Override
+    public Long getQtdUsuariosAtivos() throws Exception {
+        try {
+            String sql = "SELECT COUNT(id) FROM Usuario WHERE excluido = 0;";
+
+            Connection conn = this.manager.conectar();
+            this.manager.abreTransacao();
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            var qtd = rs.getLong(1);
+            
+            this.manager.fechaTransacao();
+            this.manager.close();
+
+            return qtd;
+
         } catch (Exception ex) {
             this.manager.desfazTransacao();
             this.manager.close();

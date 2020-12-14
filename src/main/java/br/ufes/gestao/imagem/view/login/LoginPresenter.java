@@ -11,6 +11,9 @@ import br.ufes.gestao.imagem.view.presenter.BaseInternalFramePresenter;
 import br.ufes.gestao.imagem.view.tela_principal.TelaPrincipalPresenter;
 import br.ufes.gestao.imagem.view.tela_principal.state.AdministradorTelaPrincipalPresenter;
 import br.ufes.gestao.imagem.view.tela_principal.state.UsuarioTelaPrincipalPresenter;
+import br.ufes.gestao.imagem.view.usuario.ManterUsuarioPresenter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 
 import java.awt.event.KeyEvent;
@@ -63,8 +66,16 @@ public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
             }
         });
 
-        view.getBtnCadastrar().addActionListener((e) -> {
+        this.getView().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                exibirCadastro();
+            }
 
+            @Override
+            public void focusLost(FocusEvent e) {
+                exibirCadastro();
+            }
         });
 
         getView().setVisible(true);
@@ -78,6 +89,7 @@ public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
         try {
             var usuario = usuarioService.getByLogin(login, senha);
             if (usuario != null && usuario.getId() != null) {
+                this.telaPrincipalPresenter.setUsuarioLogado(usuario);
                 if (TipoUsuarioEnum.ADMIN.equals(usuario.getTipo())) {
                     this.telaPrincipalPresenter.setState(new AdministradorTelaPrincipalPresenter(this.telaPrincipalPresenter, usuario));
                 } else if (TipoUsuarioEnum.USUARIO.equals(usuario.getTipo())) {
@@ -92,6 +104,23 @@ public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void exibirCadastro() {
+        var view = getView();
+        try {
+            Long qtd = usuarioService.getQtdUsuariosAtivos();
+            if (qtd == 0) {
+                view.getBtnCadastrar().setVisible(true);
+                view.getBtnCadastrar().addActionListener((e) -> {
+                    new ManterUsuarioPresenter(getContainer(), true);
+                });
+            } else {
+                view.getBtnCadastrar().setVisible(false);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

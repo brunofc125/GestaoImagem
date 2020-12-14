@@ -8,7 +8,7 @@ public class BaseInternalFramePresenter<T extends JInternalFrame> {
 
     private T view;
     private final JDesktopPane container;
-    
+
     public BaseInternalFramePresenter(JDesktopPane container, T view) {
         if (container == null || view == null) {
             throw new RuntimeException("Passagem nula para construção da presenter");
@@ -31,8 +31,9 @@ public class BaseInternalFramePresenter<T extends JInternalFrame> {
     public T getView() {
         return view;
     }
-    
+
     public JDesktopPane getContainer() {
         return container;
     }
+
 }

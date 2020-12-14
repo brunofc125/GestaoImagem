@@ -7,6 +7,7 @@ package br.ufes.gestao.imagem.service;
 
 import br.ufes.gestao.imagem.model.Usuario;
 import br.ufes.gestao.imagem.repository.UsuarioRepository;
+import java.util.List;
 
 /**
  *
@@ -34,6 +35,10 @@ public class UsuarioService {
     public Usuario getByLogin(String login, String senha) throws Exception {
         return this.usuarioRepository.getByLogin(login, senha);
     }
+    
+    public List<Usuario> filter(String nome) throws Exception {
+        return this.usuarioRepository.filter(nome);
+    }
 
     public void delete(Long id) throws Exception {
         this.usuarioRepository.delete(id);
@@ -41,6 +46,10 @@ public class UsuarioService {
 
     public boolean loginExists(String login) throws Exception {
         return this.usuarioRepository.loginExists(login);
+    }
+    
+    public Long getQtdUsuariosAtivos() throws Exception {
+        return this.usuarioRepository.getQtdUsuariosAtivos();
     }
     
     

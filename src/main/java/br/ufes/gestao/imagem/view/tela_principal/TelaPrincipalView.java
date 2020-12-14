@@ -36,8 +36,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         desktop = new javax.swing.JDesktopPane();
         lbUsuario = new javax.swing.JLabel();
-        lblNomeUsuario = new javax.swing.JLabel();
         btnNotificacao = new javax.swing.JButton();
+        lblNomeUsuario = new javax.swing.JLabel();
         mnBar = new javax.swing.JMenuBar();
         mnImagem = new javax.swing.JMenu();
         itmExibirImagens = new javax.swing.JMenuItem();
@@ -48,38 +48,20 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lbUsuario.setText("Usuário: ");
-
-        btnNotificacao.setText("0");
-
-        desktop.setLayer(lbUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        desktop.setLayer(lblNomeUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        desktop.setLayer(btnNotificacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(desktopLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNomeUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 942, Short.MAX_VALUE)
-                .addComponent(btnNotificacao)
-                .addContainerGap())
+            .addGap(0, 894, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(desktopLayout.createSequentialGroup()
-                .addContainerGap(646, Short.MAX_VALUE)
-                .addGroup(desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbUsuario)
-                        .addComponent(lblNomeUsuario))
-                    .addComponent(btnNotificacao, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+            .addGap(0, 438, Short.MAX_VALUE)
         );
+
+        lbUsuario.setText("Usuário: ");
+
+        btnNotificacao.setText("0");
 
         mnImagem.setText("Imagem");
 
@@ -109,10 +91,26 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(desktop)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNomeUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNotificacao)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktop)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNotificacao)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbUsuario)
+                        .addComponent(lblNomeUsuario)))
+                .addGap(5, 5, 5))
         );
 
         pack();
