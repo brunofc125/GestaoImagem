@@ -51,14 +51,14 @@ public class ListaUsuarioView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Nome"
+                "ID", "Nome", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -72,7 +72,7 @@ public class ListaUsuarioView extends javax.swing.JInternalFrame {
         tbUsuarios.setToolTipText("");
         scrUsuarios.setViewportView(tbUsuarios);
 
-        btnVisualizar.setText("Visuailzar");
+        btnVisualizar.setText("Visualizar");
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -112,8 +112,8 @@ public class ListaUsuarioView extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNome)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 260, Short.MAX_VALUE)
-                                .addComponent(btnConcederPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 193, Short.MAX_VALUE)
+                                .addComponent(btnConcederPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,7 +134,7 @@ public class ListaUsuarioView extends javax.swing.JInternalFrame {
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                .addComponent(scrUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConcederPermissao)

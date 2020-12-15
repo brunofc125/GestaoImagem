@@ -12,22 +12,23 @@ import br.ufes.gestao.imagem.view.tela_principal.TelaPrincipalPresenter;
 import br.ufes.gestao.imagem.view.tela_principal.state.AdministradorTelaPrincipalPresenter;
 import br.ufes.gestao.imagem.view.tela_principal.state.UsuarioTelaPrincipalPresenter;
 import br.ufes.gestao.imagem.view.usuario.ManterUsuarioPresenter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import br.ufes.gestao.imagem.observer.IObservador;
+import br.ufes.gestao.imagem.observer.IObservado;
 
 /**
  *
  * @author bruno
  */
-public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
+public class LoginPresenter extends BaseInternalFramePresenter<LoginView> implements IObservador {
 
     private TelaPrincipalPresenter telaPrincipalPresenter;
     private UsuarioService usuarioService;
+    private IObservado subject;
 
     public LoginPresenter(JDesktopPane container, TelaPrincipalPresenter telaPrincipalPresenter) {
         super(container, new LoginView());
@@ -66,17 +67,12 @@ public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
             }
         });
 
-        this.getView().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                exibirCadastro();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                exibirCadastro();
-            }
+        view.getBtnCadastrar().addActionListener((e) -> {
+            this.subject = new ManterUsuarioPresenter(getContainer(), true);
+            this.subject.attachObserver(this);
         });
+
+        exibirCadastro();
 
         getView().setVisible(true);
     }
@@ -112,15 +108,17 @@ public class LoginPresenter extends BaseInternalFramePresenter<LoginView> {
             Long qtd = usuarioService.getQtdUsuariosAtivos();
             if (qtd == 0) {
                 view.getBtnCadastrar().setVisible(true);
-                view.getBtnCadastrar().addActionListener((e) -> {
-                    new ManterUsuarioPresenter(getContainer(), true);
-                });
             } else {
                 view.getBtnCadastrar().setVisible(false);
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public void update() {
+        this.exibirCadastro();
     }
 
 }

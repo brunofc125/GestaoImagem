@@ -2,7 +2,6 @@ package br.ufes.gestao.imagem.repository;
 
 import br.ufes.gestao.imagem.dao.collection.UsuarioDAOCollection;
 import br.ufes.gestao.imagem.dao.interfaces.IUsuarioDAO;
-import br.ufes.gestao.imagem.exception.BusinessException;
 import br.ufes.gestao.imagem.model.Usuario;
 import java.util.List;
 
@@ -15,14 +14,14 @@ public class UsuarioRepository {
     }
 
     public void insert(Usuario usuario) throws Exception {
-        validate(usuario);
+        validate(usuario, true);
         this.usuarioDAO.insert(usuario);
     }
 
     public void update(Usuario usuario) throws Exception {
-        validate(usuario);
+        validate(usuario, false);
         if (usuario.getId() == null) {
-            throw new BusinessException("Usuário não informado");
+            throw new Exception("Usuário não informado");
         }
         this.usuarioDAO.update(usuario);
     }
@@ -51,21 +50,21 @@ public class UsuarioRepository {
         return usuarioDAO.getQtdUsuariosAtivos();
     }
 
-    private void validate(Usuario usuario) throws Exception {
+    private void validate(Usuario usuario, boolean isInsert) throws Exception {
         if (usuario == null) {
-            throw new BusinessException("Usuário não informado");
+            throw new Exception("Usuário não informado");
         }
         if (usuario.getNome() == null || usuario.getNome().isBlank()) {
-            throw new BusinessException("Nome do usuário não informado");
+            throw new Exception("Nome do usuário não informado");
         }
         if (usuario.getLogin() == null || usuario.getLogin().isBlank()) {
-            throw new BusinessException("Login do usuário não informado");
+            throw new Exception("Login do usuário não informado");
         }
-        if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
-            throw new BusinessException("Senha do usuário não informada");
+        if (isInsert && (usuario.getSenha() == null || usuario.getSenha().isBlank())) {
+            throw new Exception("Senha do usuário não informada");
         }
         if (usuario.getTipo() == null) {
-            throw new BusinessException("Tipo do usuário não informado");
+            throw new Exception("Tipo do usuário não informado");
         }
     }
 }

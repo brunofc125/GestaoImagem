@@ -21,11 +21,11 @@ public abstract class ManterUsuarioPresenterState {
         removerActionListeners(view.getBtnExcluir());
         removerActionListeners(view.getBtnFechar());
         removerActionListeners(view.getBtnSalvar());
+        presenter.getView().getCbTipo().setModel(new DefaultComboBoxModel(TipoUsuarioEnum.values()));
+        presenter.getView().getCbTipo().setSelectedIndex(0);
         view.getBtnFechar().addActionListener((e) -> {
             this.fechar();
         });
-        view.getCbTipo().setModel(new DefaultComboBoxModel(TipoUsuarioEnum.values()));
-        view.getCbTipo().setSelectedIndex(0);
         this.usuarioService = new UsuarioService();
     }
 
@@ -69,17 +69,25 @@ public abstract class ManterUsuarioPresenterState {
         view.getTxtLogin().setEditable(false);
         view.getTxtSenha().setEditable(false);
         view.getTxtConfirmarSenha().setEditable(false);
-        view.getCbTipo().setEnabled(true);
+        view.getCbTipo().setEnabled(false);
     }
 
     protected void enableCampos() {
         var view = presenter.getView();
-        view.getTxtNome().setEditable(false);
-        view.getTxtLogin().setEditable(false);
-        view.getTxtSenha().setEditable(false);
-        view.getTxtConfirmarSenha().setEditable(false);
-        view.getCbTipo().setEnabled(false);
+        view.getTxtNome().setEditable(true);
+        view.getTxtLogin().setEditable(true);
+        view.getTxtSenha().setEditable(true);
+        view.getTxtConfirmarSenha().setEditable(true);
+        view.getCbTipo().setEnabled(true);
     }
+    
+    protected void exibirSenhas(boolean exibir) {
+        var view = presenter.getView();
+        view.getTxtSenha().setVisible(exibir);
+        view.getLblSenha().setVisible(exibir);
+        view.getTxtConfirmarSenha().setVisible(exibir);
+        view.getLblConfirmarSenha().setVisible(exibir);
+    }  
 
     protected boolean senhasConferem() {
         var senha = new String(presenter.getView().getTxtSenha().getPassword());

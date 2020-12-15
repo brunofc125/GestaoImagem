@@ -19,7 +19,9 @@ public class VisualizacaoManterPresenter extends ManterUsuarioPresenterState {
     private void init(Usuario usuario) {
         setDados(usuario);
         disableCampos();
+        exibirSenhas(false);
         var view = presenter.getView();
+
         view.getBtnExcluir().setVisible(true);
         view.getBtnSalvar().setVisible(true);
         view.getBtnSalvar().setText("Habilitar Edição");
@@ -40,19 +42,18 @@ public class VisualizacaoManterPresenter extends ManterUsuarioPresenterState {
             try {
                 if (idUsuario != null) {
                     usuarioService.delete(idUsuario);
-                    JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso, saindo da aplicação!", "", JOptionPane.OK_OPTION);
-                    presenter.getView().setVisible(false);
-                    presenter.getView().dispose();
+                    JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso", "", JOptionPane.OK_OPTION);
+                    this.presenter.notifyObservers();
+                    fechar();
                 }
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "", JOptionPane.OK_OPTION);
             }
         }
     }
 
     @Override
     public void editar() {
-        enableCampos();
         presenter.setState(new EdicaoManterPresenter(presenter));
     }
 }

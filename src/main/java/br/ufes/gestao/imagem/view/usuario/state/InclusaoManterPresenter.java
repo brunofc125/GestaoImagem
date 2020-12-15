@@ -1,6 +1,5 @@
 package br.ufes.gestao.imagem.view.usuario.state;
 
-import br.ufes.gestao.imagem.exception.BusinessException;
 import br.ufes.gestao.imagem.model.Usuario;
 import br.ufes.gestao.imagem.model.enums.TipoUsuarioEnum;
 import br.ufes.gestao.imagem.view.usuario.ManterUsuarioPresenter;
@@ -39,12 +38,10 @@ public class InclusaoManterPresenter extends ManterUsuarioPresenterState {
                 Usuario usuario = getDados();
                 usuarioService.insert(usuario);
                 JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso", "Sucesso", JOptionPane.OK_OPTION);
+                this.presenter.notifyObservers();
                 fechar();
-                
-            } catch (BusinessException ex) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Senhas não conferem", "Erro", JOptionPane.ERROR_MESSAGE);

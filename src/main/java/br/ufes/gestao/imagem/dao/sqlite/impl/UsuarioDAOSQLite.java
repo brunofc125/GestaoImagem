@@ -54,19 +54,25 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
     @Override
     public void update(Usuario usuario) throws Exception {
         try {
+            int count = 0;
             var sql = new StringBuilder();
             sql.append(" UPDATE Usuario SET ");
-            sql.append("  nome = ?, ");
-            sql.append("  senha = ? ");
-            sql.append(" WERE id = ?; ");
+            sql.append("  nome = ? ");
+            if(usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+                count = 1;
+                sql.append("  , senha = ? ");
+            }
+            sql.append(" WHERE id = ?; ");
 
             Connection conn = this.manager.conectar();
             this.manager.abreTransacao();
 
             PreparedStatement ps = conn.prepareStatement(sql.toString());
             ps.setString(1, usuario.getNome());
-            ps.setString(2, usuario.getSenha());
-            ps.setLong(2, usuario.getId());
+            if(usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+                ps.setString(2, usuario.getSenha());
+            }
+            ps.setLong(2 + count, usuario.getId());
 
             ps.executeUpdate();
 
@@ -75,6 +81,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
         } catch (Exception ex) {
             this.manager.desfazTransacao();
             this.manager.close();
+            System.out.println(ex.getMessage());
             throw new Exception("Erro ao atualizar");
         }
     }
@@ -85,7 +92,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
             var sql = new StringBuilder();
             sql.append(" SELECT u.id, u.nome, u.login, u.tipo, u.excluido ");
             sql.append(" FROM Usuario u ");
-            sql.append(" WERE id = ?; ");
+            sql.append(" WHERE u.id = ?; ");
 
             Connection conn = this.manager.conectar();
             this.manager.abreTransacao();
@@ -111,6 +118,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
         } catch (Exception ex) {
             this.manager.desfazTransacao();
             this.manager.close();
+            System.out.println(ex.getMessage());
             throw new Exception("Erro ao buscar");
         }
     }

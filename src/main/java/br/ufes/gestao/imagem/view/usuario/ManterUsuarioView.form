@@ -28,10 +28,10 @@
                   <Component id="txtNome" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnFechar" min="-2" pref="120" max="-2" attributes="0"/>
-                      <EmptySpace pref="127" max="32767" attributes="0"/>
-                      <Component id="btnExcluir" min="-2" pref="120" max="-2" attributes="0"/>
+                      <EmptySpace pref="133" max="32767" attributes="0"/>
+                      <Component id="btnExcluir" min="-2" pref="160" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnSalvar" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Component id="btnSalvar" min="-2" pref="160" max="-2" attributes="0"/>
                   </Group>
                   <Component id="txtSenha" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtConfirmarSenha" alignment="0" max="32767" attributes="0"/>
@@ -75,7 +75,7 @@
               <Component id="lblTipo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cbTipo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>

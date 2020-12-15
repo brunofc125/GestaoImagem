@@ -13,11 +13,14 @@ public class EdicaoManterPresenter extends ManterUsuarioPresenterState {
 
     private void init() {
         var view = presenter.getView();
+        enableCampos();
+        exibirSenhas(true);
+        view.getCbTipo().setEnabled(false);
         view.getBtnExcluir().setVisible(false);
         view.getBtnSalvar().setVisible(true);
         view.getBtnSalvar().setText("Salvar");
         view.getTxtLogin().setEditable(false);
-
+        setDados(presenter.getUsuario());
         view.getBtnSalvar().addActionListener((ae) -> {
             salvar();
         });
@@ -28,9 +31,9 @@ public class EdicaoManterPresenter extends ManterUsuarioPresenterState {
         if (senhasConferem()) {
             try {
                 Usuario usuario = getDados();
-                if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
-                    usuarioService.update(usuario);
-                }
+                usuarioService.update(usuario);
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso", "Sucesso", JOptionPane.OK_OPTION);
+                this.presenter.notifyObservers();                
                 fechar();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

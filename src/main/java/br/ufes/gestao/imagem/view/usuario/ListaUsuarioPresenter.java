@@ -15,12 +15,13 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import br.ufes.gestao.imagem.observer.IObservador;
 
 /**
  *
  * @author bruno
  */
-public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuarioView> {
+public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuarioView> implements IObservador {
 
     private UsuarioService usuarioService;
     private List<Usuario> usuarios;
@@ -30,35 +31,8 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         super(container, new ListaUsuarioView());
         var view = getView();
         usuarioService = new UsuarioService();
-
         usuarios = new ArrayList<>();
-
-        tmUsuarios = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        tmUsuarios.setDataVector(new Object[][]{}, new String[]{"ID", "Nome"});
-
-        try {
-            buscar();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-
-        view.getTbUsuarios().setModel(tmUsuarios);
-
-        view.getTbUsuarios().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        view.getBtnBuscar().addActionListener((ActionEvent e) -> {
-            try {
-                buscar();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        configurarTabela();
 
         view.getBtnBuscar().addActionListener((ActionEvent e) -> {
             try {
@@ -69,11 +43,17 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         });
 
         view.getBtnCadastrar().addActionListener((ActionEvent e) -> {
-            throw new UnsupportedOperationException("Not supported yet.");
+            new ManterUsuarioPresenter(container, false).attachObserver(this);
         });
 
         view.getBtnVisualizar().addActionListener((ActionEvent e) -> {
-            throw new UnsupportedOperationException("Not supported yet.");
+            int linhaSelecionada = getView().getTbUsuarios().getSelectedRow();
+            if (linhaSelecionada >= 0) {
+                var id = (Long) tmUsuarios.getValueAt(linhaSelecionada, 0);
+                new ManterUsuarioPresenter(container, id).attachObserver(this);
+            } else {
+                JOptionPane.showMessageDialog(null, "É necessário selecionar um contato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         view.getBtnConcederPermissao().addActionListener((ActionEvent e) -> {
@@ -88,6 +68,7 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
+
         view.setVisible(true);
     }
 
@@ -97,7 +78,7 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         this.usuarios = usuarioService.filter(nome);
         if (this.usuarios != null && this.usuarios.size() > 0) {
             this.usuarios.forEach(usuario -> {
-                tmUsuarios.addRow(new Object[]{usuario.getId(), usuario.getNome()});
+                tmUsuarios.addRow(new Object[]{usuario.getId(), usuario.getNome(), usuario.getTipo().getDescricao()});
             });
         }
     }
@@ -107,11 +88,43 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         if (linhaSelecionada >= 0) {
             var usuario = usuarios.get(linhaSelecionada);
             int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir a tarefa", "", JOptionPane.YES_NO_OPTION);
-
             if (opcao == 0) {
                 usuarioService.delete(usuario.getId());
                 JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "", JOptionPane.OK_OPTION);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "É necessário selecionar um contato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public void update() {
+        try {
+            this.buscar();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void fechar() {
+        getView().dispose();
+    }
+
+    private void configurarTabela() {
+        try {
+            var view = getView();
+            tmUsuarios = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tmUsuarios.setDataVector(new Object[][]{}, new String[]{"ID", "Nome", "Tipo"});
+            view.getTbUsuarios().setModel(tmUsuarios);
+            view.getTbUsuarios().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            buscar();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
