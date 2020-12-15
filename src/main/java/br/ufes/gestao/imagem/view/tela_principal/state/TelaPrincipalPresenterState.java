@@ -29,7 +29,7 @@ public abstract class TelaPrincipalPresenterState {
         removerActionListeners(view.getItmSair());
 
         view.getItmExibirImagens().addActionListener((e) -> {
-            new ListaImagemPresenter(view.getDesktop());
+            new ListaImagemPresenter(view.getDesktop(), presenter.getUsuarioLogado().getId(), true);
         });
 
         view.getItmSair().addActionListener((e) -> {

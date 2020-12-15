@@ -9,10 +9,10 @@ public class InclusaoManterPresenter extends ManterUsuarioPresenterState {
 
     public InclusaoManterPresenter(ManterUsuarioPresenter presenter, boolean isFirstUser) {
         super(presenter);
-        init(isFirstUser);
+        config(isFirstUser);
     }
 
-    private void init(boolean isFirstUser) {
+    private void config(boolean isFirstUser) {
         var view = presenter.getView();
         view.getBtnExcluir().setVisible(false);
         view.getBtnSalvar().setVisible(true);

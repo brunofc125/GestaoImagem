@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import br.ufes.gestao.imagem.observer.IObservador;
+import br.ufes.gestao.imagem.view.imagem.ListaImagemPresenter;
 
 /**
  *
@@ -52,12 +53,12 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
                 var id = (Long) tmUsuarios.getValueAt(linhaSelecionada, 0);
                 new ManterUsuarioPresenter(container, id).attachObserver(this);
             } else {
-                JOptionPane.showMessageDialog(null, "É necessário selecionar um contato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "É necessário selecionar um usuário", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         view.getBtnConcederPermissao().addActionListener((ActionEvent e) -> {
-            throw new UnsupportedOperationException("Not supported yet.");
+            concederPermissao();
         });
 
         view.getBtnExcluir().addActionListener((ActionEvent e) -> {
@@ -87,13 +88,23 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         int linhaSelecionada = getView().getTbUsuarios().getSelectedRow();
         if (linhaSelecionada >= 0) {
             var usuario = usuarios.get(linhaSelecionada);
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir a tarefa", "", JOptionPane.YES_NO_OPTION);
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir o usuário?", "", JOptionPane.YES_NO_OPTION);
             if (opcao == 0) {
                 usuarioService.delete(usuario.getId());
                 JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "", JOptionPane.OK_OPTION);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "É necessário selecionar um contato", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "É necessário selecionar um usuário", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void concederPermissao() {
+        int linhaSelecionada = getView().getTbUsuarios().getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            var usuario = usuarios.get(linhaSelecionada);
+            new ListaImagemPresenter(getContainer(), usuario.getId(), false);
+        } else {
+            JOptionPane.showMessageDialog(null, "É necessário selecionar um usuário", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

@@ -10,6 +10,9 @@ import br.ufes.gestao.imagem.proxy.IProxyImage;
 import br.ufes.gestao.imagem.proxy.ImagemProxy;
 import br.ufes.gestao.imagem.service.ImagemService;
 import br.ufes.gestao.imagem.util.imagem.ImagemListRenderer;
+import br.ufes.gestao.imagem.view.imagem.state.ListaImagemPermissaoPresenter;
+import br.ufes.gestao.imagem.view.imagem.state.ListaImagemPresenterState;
+import br.ufes.gestao.imagem.view.imagem.state.ListaImagemVisualizarPresenter;
 import br.ufes.gestao.imagem.view.presenter.BaseInternalFramePresenter;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +27,19 @@ public class ListaImagemPresenter extends BaseInternalFramePresenter<ListaImagem
 
     private Map<String, IProxyImage> imageMap;
     private ImagemService imagemService;
+    private ListaImagemPresenterState state;
 
-    public ListaImagemPresenter(JDesktopPane container) {
+    public ListaImagemPresenter(JDesktopPane container, Long idUsuario, boolean isVisualizar) {
         super(container, new ListaImagemView());
         this.imagemService = new ImagemService();
         var view = getView();
-        
-        
+
+        if(isVisualizar) {
+            this.setState(new ListaImagemVisualizarPresenter(this, idUsuario));
+        } else {
+            this.setState(new ListaImagemPermissaoPresenter(this, idUsuario));
+        }
+
         this.criarLista();
         view.setVisible(true);
     }
@@ -50,6 +59,14 @@ public class ListaImagemPresenter extends BaseInternalFramePresenter<ListaImagem
         }
 
     }
+    
+    public IProxyImage getImagemSelecionada() {
+        var caminho = getView().getListImagem().getSelectedValue();
+        if(caminho != null) {
+            return this.imageMap.get(caminho);
+        }
+        return null;
+    }
 
     private Map<String, IProxyImage> createImageMap(List<Imagem> list) {
         Map<String, IProxyImage> map = new HashMap<>();
@@ -67,6 +84,14 @@ public class ListaImagemPresenter extends BaseInternalFramePresenter<ListaImagem
             i++;
         }
         return caminhos;
+    }
+
+    public void setState(ListaImagemPresenterState state) {
+        this.state = state;
+    }
+    
+    public boolean isTodas() {
+        return getView().getChkTodasImagens().isSelected();
     }
 
 }

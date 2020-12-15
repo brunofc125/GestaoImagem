@@ -5,7 +5,10 @@
  */
 package br.ufes.gestao.imagem.view.imagem;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -34,6 +37,7 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
         btnVisualizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCompartilhar = new javax.swing.JButton();
+        chkTodasImagens = new javax.swing.JCheckBox();
 
         setClosable(true);
         setMaximizable(true);
@@ -47,18 +51,27 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
 
         btnCompartilhar.setText("Compartilhar");
 
+        chkTodasImagens.setText("Todas Imagens");
+        chkTodasImagens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkTodasImagensActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrImagem)
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCompartilhar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCompartilhar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                    .addComponent(chkTodasImagens))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -66,30 +79,55 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnVisualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCompartilhar)))
+                        .addComponent(btnCompartilhar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chkTodasImagens)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void chkTodasImagensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTodasImagensActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkTodasImagensActionPerformed
+
     public JList<String> getListImagem() {
         return listImagem;
     }
-    
-    
-    
+
+    public JButton getBtnCompartilhar() {
+        return btnCompartilhar;
+    }
+
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
+    public JButton getBtnVisualizar() {
+        return btnVisualizar;
+    }
+
+    public JCheckBox getChkTodasImagens() {
+        return chkTodasImagens;
+    }
+
+    public JScrollPane getScrImagem() {
+        return scrImagem;
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCompartilhar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVisualizar;
+    private javax.swing.JCheckBox chkTodasImagens;
     private javax.swing.JList<String> listImagem;
     private javax.swing.JScrollPane scrImagem;
     // End of variables declaration//GEN-END:variables

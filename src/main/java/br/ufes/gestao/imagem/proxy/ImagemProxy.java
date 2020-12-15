@@ -23,5 +23,10 @@ public class ImagemProxy implements IProxyImage {
         var imagemEscalada = imagemArquivo.getScaledInstance(50, 50, Image.SCALE_FAST);
         return new ImageIcon(imagemEscalada);
     }
+    
+    @Override
+    public Imagem getImage() {
+        return imagem;
+    }
 
 }

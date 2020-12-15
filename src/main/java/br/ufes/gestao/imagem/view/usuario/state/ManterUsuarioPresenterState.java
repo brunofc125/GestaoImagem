@@ -14,7 +14,7 @@ public abstract class ManterUsuarioPresenterState {
 
     public ManterUsuarioPresenterState(ManterUsuarioPresenter presenter) {
         if (presenter == null) {
-            throw new RuntimeException("Presenter nao informada");
+            throw new RuntimeException("Presenter não informada");
         }
         this.presenter = presenter;
         var view = this.presenter.getView();

@@ -8,6 +8,7 @@ package br.ufes.gestao.imagem.repository;
 import br.ufes.gestao.imagem.dao.collection.ImagemDAOCollection;
 import br.ufes.gestao.imagem.dao.interfaces.IImagemDAO;
 import br.ufes.gestao.imagem.model.Imagem;
+import br.ufes.gestao.imagem.model.Permissao;
 import java.util.List;
 
 /**
@@ -15,19 +16,15 @@ import java.util.List;
  * @author bruno
  */
 public class ImagemRepository {
+
     private IImagemDAO imagemDAO;
-    
+
     public ImagemRepository() {
         this.imagemDAO = ImagemDAOCollection.getInstancia().cria(System.getProperty("db.name"));
     }
-    
+
     public List<Imagem> getAll() throws Exception {
         return imagemDAO.getAll();
     }
-    
+
 }
-
-
-/*public List<Imagem> getAll() throws Exception;
-    public Imagem getById(Long id) throws Exception;
-    public void delete(Long id) throws Exception;*/

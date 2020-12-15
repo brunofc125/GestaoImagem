@@ -13,10 +13,10 @@ public class VisualizacaoManterPresenter extends ManterUsuarioPresenterState {
         if (usuario != null && usuario.getId() != null) {
             idUsuario = usuario.getId();
         }
-        init(usuario);
+        config(usuario);
     }
 
-    private void init(Usuario usuario) {
+    private void config(Usuario usuario) {
         setDados(usuario);
         disableCampos();
         exibirSenhas(false);

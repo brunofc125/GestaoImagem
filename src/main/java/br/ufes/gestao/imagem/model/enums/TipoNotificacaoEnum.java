@@ -1,7 +1,10 @@
 package br.ufes.gestao.imagem.model.enums;
 
 public enum TipoNotificacaoEnum {
-    TESTE( "Administrador" );
+    SOLICITACAO_VISUALIZAR("Solicitação Visualizar"),
+    SOLICITACAO_EXCLUIR("Solicitação Excluir"),
+    SOLICITACAO_COMPARTILHAR("Solicitação Compartilhar"),
+    COMPARTILHAMENTO("Compartilhamento");
     
     private final String descricao;
 
@@ -13,13 +16,9 @@ public enum TipoNotificacaoEnum {
         return descricao;
     }
     
-    public TipoNotificacaoEnum getEnum(String cod) {
-        switch(cod) {
-            case "TESTE":
-                return TESTE;
-            default:
-                throw new RuntimeException("Não é possível converter esse tipo de notificacao");
-        }
+    @Override
+    public String toString() {
+        return descricao;
     }
 
 }

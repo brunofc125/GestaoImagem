@@ -8,10 +8,10 @@ public class EdicaoManterPresenter extends ManterUsuarioPresenterState {
 
     public EdicaoManterPresenter(ManterUsuarioPresenter presenter) {
         super(presenter);
-        init();
+        config();
     }
 
-    private void init() {
+    private void config() {
         var view = presenter.getView();
         enableCampos();
         exibirSenhas(true);

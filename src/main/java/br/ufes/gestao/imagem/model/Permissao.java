@@ -1,11 +1,11 @@
 package br.ufes.gestao.imagem.model;
 
-import br.ufes.gestao.imagem.model.enums.TipoPermissao;
+import br.ufes.gestao.imagem.model.enums.TipoPermissaoEnum;
 
 public class Permissao {
     private Usuario usuario;
     private Imagem imagem;
-    private TipoPermissao tipo;
+    private TipoPermissaoEnum tipo;
 
     public Usuario getUsuario() {
         return usuario;
@@ -23,11 +23,11 @@ public class Permissao {
         this.imagem = imagem;
     }
 
-    public TipoPermissao getTipo() {
+    public TipoPermissaoEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoPermissao tipo) {
+    public void setTipo(TipoPermissaoEnum tipo) {
         this.tipo = tipo;
     }
     

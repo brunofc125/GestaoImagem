@@ -38,4 +38,9 @@ public class Imagem implements IProxyImage {
         return new ImageIcon(this.caminho);
     }
 
+    @Override
+    public Imagem getImage() {
+        return this;
+    }
+    
 }

@@ -23,7 +23,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
     }
 
     @Override
-    public void insert(Usuario usuario) throws Exception {
+    public Usuario insert(Usuario usuario) throws Exception {
         try {
             var sql = new StringBuilder();
             sql.append("INSERT INTO Usuario");
@@ -41,14 +41,39 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
 
             ps.executeUpdate();
 
+            var usuarioInserido = getByMaxId(conn);
+            
             this.manager.fechaTransacao();
             this.manager.close();
+            
+            return usuarioInserido;
         } catch (Exception ex) {
             this.manager.desfazTransacao();
             this.manager.close();
             System.out.println(ex.getMessage());
             throw new Exception("Erro ao inserir");
         }
+    }
+
+    private Usuario getByMaxId(Connection conn) throws Exception {
+        var sql = new StringBuilder();
+        sql.append(" SELECT u.id, u.nome, u.login, u.tipo, u.excluido ");
+        sql.append(" FROM Usuario u ");
+        sql.append(" WHERE u.id = ( SELECT MAX(u2.id) FROM Usuario u2 ); ");
+
+        PreparedStatement ps = conn.prepareStatement(sql.toString());
+        ResultSet rs = ps.executeQuery();
+
+        Usuario usuario = new Usuario();
+
+        while (rs.next()) {
+            usuario.setId(rs.getLong(1));
+            usuario.setNome(rs.getString(2));
+            usuario.setLogin(rs.getString(3));
+            usuario.setTipo(TipoUsuarioEnum.valueOf(rs.getString(4)));
+            usuario.setExcluido(rs.getInt(5) == 1);
+        }
+        return usuario;
     }
 
     @Override
@@ -58,7 +83,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
             var sql = new StringBuilder();
             sql.append(" UPDATE Usuario SET ");
             sql.append("  nome = ? ");
-            if(usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+            if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
                 count = 1;
                 sql.append("  , senha = ? ");
             }
@@ -69,7 +94,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
 
             PreparedStatement ps = conn.prepareStatement(sql.toString());
             ps.setString(1, usuario.getNome());
-            if(usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+            if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
                 ps.setString(2, usuario.getSenha());
             }
             ps.setLong(2 + count, usuario.getId());
@@ -261,7 +286,7 @@ public class UsuarioDAOSQLite implements IUsuarioDAO {
 
             ResultSet rs = ps.executeQuery();
             var qtd = rs.getLong(1);
-            
+
             this.manager.fechaTransacao();
             this.manager.close();
 

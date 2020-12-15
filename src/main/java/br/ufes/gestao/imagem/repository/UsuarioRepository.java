@@ -13,9 +13,9 @@ public class UsuarioRepository {
         this.usuarioDAO = UsuarioDAOCollection.getInstancia().cria(System.getProperty("db.name"));
     }
 
-    public void insert(Usuario usuario) throws Exception {
+    public Usuario insert(Usuario usuario) throws Exception {
         validate(usuario, true);
-        this.usuarioDAO.insert(usuario);
+        return this.usuarioDAO.insert(usuario);
     }
 
     public void update(Usuario usuario) throws Exception {
@@ -59,6 +59,8 @@ public class UsuarioRepository {
         }
         if (usuario.getLogin() == null || usuario.getLogin().isBlank()) {
             throw new Exception("Login do usuário não informado");
+        } else if (loginExists(usuario.getLogin()) && isInsert) {
+            throw new Exception("Já existe usuário com este login");
         }
         if (isInsert && (usuario.getSenha() == null || usuario.getSenha().isBlank())) {
             throw new Exception("Senha do usuário não informada");

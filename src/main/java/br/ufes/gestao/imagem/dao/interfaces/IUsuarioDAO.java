@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IUsuarioDAO {
 
-    public void insert(Usuario usuario) throws Exception;
+    public Usuario insert(Usuario usuario) throws Exception;
 
     public void update(Usuario usuario) throws Exception;
 
