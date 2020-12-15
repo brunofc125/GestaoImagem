@@ -14,15 +14,23 @@ import java.util.List;
  * @author bruno
  */
 public class ImagemService {
+
     private ImagemRepository imagemRepository;
 
     public ImagemService() {
         imagemRepository = new ImagemRepository();
     }
-    
+
     public List<Imagem> getAll() throws Exception {
         return imagemRepository.getAll();
     }
-    
-    
+
+    public void delete(Long id) throws Exception {
+        imagemRepository.delete(id);
+    }
+
+    public void restaurar(Long id) throws Exception {
+        imagemRepository.restaurar(id);
+    }
+
 }

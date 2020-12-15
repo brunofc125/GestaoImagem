@@ -1,5 +1,6 @@
 package br.ufes.gestao.imagem.model;
 
+import br.ufes.gestao.imagem.memento.ImagemMemento;
 import br.ufes.gestao.imagem.proxy.IProxyImage;
 import javax.swing.ImageIcon;
 
@@ -42,5 +43,15 @@ public class Imagem implements IProxyImage {
     public Imagem getImage() {
         return this;
     }
-    
+
+    public ImagemMemento getMemento() {
+        return new ImagemMemento(id, caminho, excluida);
+    }
+
+    public void restauraMemento(ImagemMemento imagemMemento) {
+        this.id = imagemMemento.getId();
+        this.caminho = imagemMemento.getCaminho();
+        this.excluida = imagemMemento.isExcluida();
+    }
+
 }

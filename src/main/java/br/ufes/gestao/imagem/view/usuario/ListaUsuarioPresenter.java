@@ -17,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import br.ufes.gestao.imagem.observer.IObservador;
 import br.ufes.gestao.imagem.view.imagem.ListaImagemPresenter;
+import javax.swing.JButton;
 
 /**
  *
@@ -34,6 +35,12 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
         usuarioService = new UsuarioService();
         usuarios = new ArrayList<>();
         configurarTabela();
+        
+        removerActionListeners(view.getBtnBuscar());
+        removerActionListeners(view.getBtnCadastrar());
+        removerActionListeners(view.getBtnVisualizar());
+        removerActionListeners(view.getBtnConcederPermissao());
+        removerActionListeners(view.getBtnExcluir());
 
         view.getBtnBuscar().addActionListener((ActionEvent e) -> {
             try {
@@ -91,7 +98,7 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
             int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir o usuário?", "", JOptionPane.YES_NO_OPTION);
             if (opcao == 0) {
                 usuarioService.delete(usuario.getId());
-                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, "Usuário excluída com sucesso!", "", JOptionPane.OK_OPTION);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É necessário selecionar um usuário", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -136,6 +143,12 @@ public class ListaUsuarioPresenter extends BaseInternalFramePresenter<ListaUsuar
             buscar();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void removerActionListeners(JButton btn) {
+        for (var action : btn.getActionListeners()) {
+            btn.removeActionListener(action);
         }
     }
 

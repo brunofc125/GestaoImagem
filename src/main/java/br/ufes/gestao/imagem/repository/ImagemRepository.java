@@ -8,7 +8,6 @@ package br.ufes.gestao.imagem.repository;
 import br.ufes.gestao.imagem.dao.collection.ImagemDAOCollection;
 import br.ufes.gestao.imagem.dao.interfaces.IImagemDAO;
 import br.ufes.gestao.imagem.model.Imagem;
-import br.ufes.gestao.imagem.model.Permissao;
 import java.util.List;
 
 /**
@@ -25,6 +24,20 @@ public class ImagemRepository {
 
     public List<Imagem> getAll() throws Exception {
         return imagemDAO.getAll();
+    }
+
+    public void delete(Long id) throws Exception {
+        if (id == null) {
+            throw new Exception("ID não informado");
+        }
+        imagemDAO.delete(id);
+    }
+
+    public void restaurar(Long id) throws Exception {
+        if (id == null) {
+            throw new Exception("ID não informado");
+        }
+        imagemDAO.restaurar(id);
     }
 
 }

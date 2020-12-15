@@ -14,28 +14,29 @@ import javax.swing.JOptionPane;
  * @author bruno
  */
 public class ListaImagemPermissaoPresenter extends ListaImagemPresenterState {
-
+    
     private Long idUsuario;
-
+    
     public ListaImagemPermissaoPresenter(ListaImagemPresenter presenter, Long idUsuario) {
         super(presenter);
         this.idUsuario = idUsuario;
         config();
     }
-
+    
     private void config() {
         var view = presenter.getView();
         view.getBtnCompartilhar().setVisible(false);
         view.getBtnExcluir().setVisible(false);
+        view.getBtnRestaurar().setVisible(false);
         view.getBtnVisualizar().setVisible(true);
         view.getBtnVisualizar().setText("Permissões");
         view.getChkTodasImagens().setVisible(true);
-
+        
         view.getBtnVisualizar().addActionListener((e) -> {
             salvarPermissao();
         });
     }
-
+    
     private void salvarPermissao() {
         var imagemProxy = presenter.getImagemSelecionada();
         if (imagemProxy != null || presenter.isTodas()) {
@@ -49,5 +50,5 @@ public class ListaImagemPermissaoPresenter extends ListaImagemPresenterState {
             JOptionPane.showMessageDialog(null, "É necessário selecionar uma imagem", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
 }

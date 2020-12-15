@@ -11,4 +11,6 @@ public interface IImagemDAO {
 
     public void delete(Long id) throws Exception;
 
+    public void restaurar(Long id) throws Exception;
+
 }

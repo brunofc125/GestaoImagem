@@ -6,8 +6,11 @@
 package br.ufes.gestao.imagem.view.tela_principal.state;
 
 import br.ufes.gestao.imagem.model.Usuario;
+import br.ufes.gestao.imagem.service.NotificacaoService;
 import br.ufes.gestao.imagem.view.imagem.ListaImagemPresenter;
+import br.ufes.gestao.imagem.view.notificacao.NotificacaoPresenter;
 import br.ufes.gestao.imagem.view.tela_principal.TelaPrincipalPresenter;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 /**
@@ -17,16 +20,20 @@ import javax.swing.JMenuItem;
 public abstract class TelaPrincipalPresenterState {
 
     protected TelaPrincipalPresenter presenter;
+    protected NotificacaoService notificacaoService;
 
     public TelaPrincipalPresenterState(TelaPrincipalPresenter presenter) {
         if (presenter == null) {
             throw new RuntimeException("Presenter nao informada");
         }
         this.presenter = presenter;
+        this.notificacaoService = new NotificacaoService();
         var view = this.presenter.getView();
+        getQtdNotificacoes();
         removerActionListeners(view.getItmExibirImagens());
         removerActionListeners(view.getItmUsuarioCadastro());
         removerActionListeners(view.getItmSair());
+        removerActionListeners(view.getBtnNotificacao());
 
         view.getItmExibirImagens().addActionListener((e) -> {
             new ListaImagemPresenter(view.getDesktop(), presenter.getUsuarioLogado().getId(), true);
@@ -34,6 +41,10 @@ public abstract class TelaPrincipalPresenterState {
 
         view.getItmSair().addActionListener((e) -> {
             this.presenter.setState(new LoginTelaPrincipalPresenter(this.presenter));
+        });
+
+        view.getBtnNotificacao().addActionListener((e) -> {
+            new NotificacaoPresenter(presenter.getView().getDesktop(), presenter.getUsuarioLogado().getId(), this.presenter);
         });
     }
 
@@ -79,9 +90,9 @@ public abstract class TelaPrincipalPresenterState {
         view.getLbUsuario().setVisible(true);
         view.getLblNomeUsuario().setVisible(true);
     }
-    
+
     public void exitViews() {
-        for (var frame :  presenter.getView().getDesktop().getAllFrames()) {
+        for (var frame : presenter.getView().getDesktop().getAllFrames()) {
             frame.setVisible(false);
             frame.dispose();
         }
@@ -92,4 +103,24 @@ public abstract class TelaPrincipalPresenterState {
             item.removeActionListener(action);
         }
     }
+
+    private void removerActionListeners(JButton btn) {
+        for (var action : btn.getActionListeners()) {
+            btn.removeActionListener(action);
+        }
+    }
+
+    public void getQtdNotificacoes() {
+        try {
+            var qtd = notificacaoService.getQtdNotificacoes(presenter.getUsuarioLogado().getId());
+            if (qtd != null) {
+                presenter.getView().getBtnNotificacao().setText(qtd.toString());
+            } else {
+                presenter.getView().getBtnNotificacao().setText("0");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

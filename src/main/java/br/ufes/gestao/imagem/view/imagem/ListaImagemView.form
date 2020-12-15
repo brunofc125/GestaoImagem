@@ -27,14 +27,13 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="scrImagem" pref="341" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="btnVisualizar" alignment="1" max="32767" attributes="0"/>
-                      <Component id="btnExcluir" alignment="1" max="32767" attributes="0"/>
-                      <Component id="btnCompartilhar" alignment="1" pref="160" max="32767" attributes="0"/>
-                  </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnVisualizar" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnExcluir" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnCompartilhar" alignment="1" pref="160" max="32767" attributes="0"/>
                   <Component id="chkTodasImagens" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRestaurar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -53,9 +52,10 @@
                       <Component id="btnCompartilhar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="chkTodasImagens" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnRestaurar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="scrImagem" pref="430" max="32767" attributes="0"/>
+                  <Component id="scrImagem" pref="434" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -104,6 +104,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkTodasImagensActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRestaurar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Restaurar"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

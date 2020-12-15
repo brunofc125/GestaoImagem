@@ -38,6 +38,7 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
         btnExcluir = new javax.swing.JButton();
         btnCompartilhar = new javax.swing.JButton();
         chkTodasImagens = new javax.swing.JCheckBox();
+        btnRestaurar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -58,6 +59,8 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRestaurar.setText("Restaurar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,12 +69,12 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCompartilhar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
-                    .addComponent(chkTodasImagens))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCompartilhar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(chkTodasImagens)
+                    .addComponent(btnRestaurar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,8 +90,9 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
                         .addComponent(btnCompartilhar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chkTodasImagens)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRestaurar))
+                    .addComponent(scrImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -123,9 +127,14 @@ public class ListaImagemView extends javax.swing.JInternalFrame {
         return scrImagem;
     }    
 
+    public JButton getBtnRestaurar() {
+        return btnRestaurar;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCompartilhar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JCheckBox chkTodasImagens;
     private javax.swing.JList<String> listImagem;

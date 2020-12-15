@@ -28,13 +28,14 @@ public abstract class ListaImagemPresenterState {
         removerActionListeners(view.getBtnCompartilhar());
         removerActionListeners(view.getBtnExcluir());
         removerActionListeners(view.getBtnVisualizar());
+        removerActionListeners(view.getBtnRestaurar());
     }
-    
+
     public void fechar() {
         presenter.getView().setVisible(false);
         presenter.getView().dispose();
     }
-    
+
     private void removerActionListeners(JButton btn) {
         for (var action : btn.getActionListeners()) {
             btn.removeActionListener(action);
